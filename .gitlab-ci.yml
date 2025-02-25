@@ -1,0 +1,55 @@
+image: maven:3.9.9-eclipse-temurin-21
+# services:
+#   - postgres:latest
+
+stages:
+  - test
+#   - build
+#   - deploy
+# variables:
+#   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+#   POSTGRES_DB: db_springboot_exercices
+#   POSTGRES_USER: db_user
+#   POSTGRES_PASSWORD: db_password
+#   POSTGRES_HOST_AUTH_METHOD: trust
+    
+test:
+  stage: test
+  allow_failure: true
+  script:
+    - echo "Execution CI"
+#     - cp src/main/resources/application-ci.properties src/main/resources/application.properties
+#     - mvn clean test
+
+# build:
+#   stage: build
+#   script:
+#     - echo "Phase de build"
+#     - mvn clean package
+#   artifacts:
+#     when: always
+#     name: "SpringBoot Report"
+#     paths:
+#       - target/*
+#     expire_in: 24h
+
+
+# deploy:
+#   stage: deploy
+#   needs:
+#     - job: build
+#       artifacts: true
+#   script:
+#     - echo "Phase de déploiement"
+#     - mkdir ~/.aws
+#     - echo -e "[default]\naws_access_key_id=$AWS_ACCESS_KEY_ID\naws_secret_access_key=$AWS_SECRET_ACCESS_KEY\naws_session_token=$AWS_SESSION_TOKEN" >> ~/.aws/credentials
+#     - echo -e "[default]\nregion = $AWS_DEFAULT_REGION" > ~/.aws/config
+#     - apt update -y
+#     - apt install unzip -y
+#     - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+#     - unzip awscliv2.zip
+#     - ./aws/install
+#     - S3_BUCKET=`aws s3 ls | cut -f 3 -d ' '`
+#     - aws s3 cp target/demo-0.0.1-SNAPSHOT.jar s3://$S3_BUCKET
+#     - aws elasticbeanstalk create-application-version --application-name springboot_exercices --version-label=commit-$CI_COMMIT_SHORT_SHA --source-bundle S3Bucket="$S3_BUCKET",S3Key="demo-0.0.1-SNAPSHOT.jar"
+#     - aws elasticbeanstalk update-environment --environment-name Springbootexercices-env --version-label=commit-$CI_COMMIT_SHORT_SHA
