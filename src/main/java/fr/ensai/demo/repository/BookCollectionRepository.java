@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BookCollectionRepository extends CrudRepository<BookCollection, Long> {
     public Iterable<BookCollection> findByName(String name);
+
     public Iterable<BookCollection> findByNameIgnoreCase(String name);
 }

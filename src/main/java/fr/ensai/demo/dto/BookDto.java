@@ -10,15 +10,15 @@ public class BookDto {
     private String genreLabel;
     private String countryName;
 
-
     // ----------------------------------------------------------------
     // Constructors
     // ----------------------------------------------------------------
-    
-    public BookDto() {}
+
+    public BookDto() {
+    }
 
     public BookDto(Long bookId, String title, int publicationYear,
-                   String authorName, String genreLabel, String countryName) {
+            String authorName, String genreLabel, String countryName) {
         this.bookId = bookId;
         this.title = title;
         this.publicationYear = publicationYear;
@@ -38,6 +38,7 @@ public class BookDto {
     public Long getBookId() {
         return bookId;
     }
+
     public void setBookId(Long bookId) {
         this.bookId = bookId;
     }
@@ -45,6 +46,7 @@ public class BookDto {
     public String getTitle() {
         return title;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -52,6 +54,7 @@ public class BookDto {
     public int getPublicationYear() {
         return publicationYear;
     }
+
     public void setPublicationYear(int publicationYear) {
         this.publicationYear = publicationYear;
     }
@@ -59,6 +62,7 @@ public class BookDto {
     public String getAuthorName() {
         return authorName;
     }
+
     public void setAuthorName(String authorName) {
         this.authorName = authorName;
     }
@@ -66,6 +70,7 @@ public class BookDto {
     public String getGenreLabel() {
         return genreLabel;
     }
+
     public void setGenreLabel(String genreLabel) {
         this.genreLabel = genreLabel;
     }
@@ -73,7 +78,20 @@ public class BookDto {
     public String getCountryName() {
         return countryName;
     }
+
     public void setCountryName(String countryName) {
         this.countryName = countryName;
+    }
+
+    @Override
+    public String toString() {
+        return "BookDto(" +
+                "bookId=" + bookId +
+                ", title='" + title + '\'' +
+                ", publicationYear=" + publicationYear +
+                ", authorName='" + authorName + '\'' +
+                ", genreLabel='" + genreLabel + '\'' +
+                ", countryName='" + countryName + '\'' +
+                ')';
     }
 }

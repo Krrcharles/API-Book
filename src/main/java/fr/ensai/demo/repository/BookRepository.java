@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BookRepository extends CrudRepository<Book, Long> {
     public Iterable<Book> findByTitle(String title);
+
     public Iterable<Book> findByTitleIgnoreCase(String title);
     // TODO : Add more derived queries ?
 }

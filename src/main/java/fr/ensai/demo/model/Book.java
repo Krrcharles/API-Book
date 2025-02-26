@@ -11,14 +11,14 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "book_id") 
+    @Column(name = "book_id")
     private Long bookId;
 
     @NotEmpty(message = "Title (book) missing")
     @Column(nullable = false)
     private String title;
 
-    @Column(name="publication_year", nullable = false)
+    @Column(name = "publication_year", nullable = false)
     private int publicationYear;
 
     /**
@@ -48,7 +48,7 @@ public class Book {
     // ----------------------------------------------------------------
     // Constructors
     // ----------------------------------------------------------------
-    
+
     protected Book() {
         // Required by JPA
     }
@@ -73,6 +73,7 @@ public class Book {
     public Long getBookId() {
         return bookId;
     }
+
     public void setBookId(Long bookId) {
         this.bookId = bookId;
     }
@@ -80,6 +81,7 @@ public class Book {
     public String getTitle() {
         return title;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -87,6 +89,7 @@ public class Book {
     public int getPublicationYear() {
         return publicationYear;
     }
+
     public void setPublicationYear(int publicationYear) {
         this.publicationYear = publicationYear;
     }
@@ -94,6 +97,7 @@ public class Book {
     public Author getAuthor() {
         return author;
     }
+
     public void setAuthor(Author author) {
         this.author = author;
     }
@@ -101,6 +105,7 @@ public class Book {
     public Genre getGenre() {
         return genre;
     }
+
     public void setGenre(Genre genre) {
         this.genre = genre;
     }
@@ -108,20 +113,35 @@ public class Book {
     public Country getCountry() {
         return country;
     }
+
     public void setCountry(Country country) {
         this.country = country;
     }
 
-    // Equals et HashCode
+    // Equals
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Book book = (Book) o;
         return publicationYear == book.publicationYear &&
-               Objects.equals(author, book.author) &&
-               Objects.equals(title, book.title) &&
-               Objects.equals(genre, book.genre) &&
-               Objects.equals(country, book.country);
+                Objects.equals(author, book.author) &&
+                Objects.equals(title, book.title) &&
+                Objects.equals(genre, book.genre) &&
+                Objects.equals(country, book.country);
+    }
+
+    @Override
+    public String toString() {
+        return "Book(" +
+                "bookId=" + bookId +
+                ", title='" + title + '\'' +
+                ", publicationYear=" + publicationYear +
+                ", author=" + author +
+                ", genre=" + genre +
+                ", country=" + country +
+                ")";
     }
 }

@@ -23,7 +23,6 @@ public class Country {
      * One country can be linked to many books.
      * "mappedBy = 'country'" must match the field name in Book.java
      * where @ManyToOne is declared.
-     * TODO : Trust.
      */
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = false)
     private List<Book> books = new ArrayList<>();
@@ -52,6 +51,7 @@ public class Country {
     public Long getCountryId() {
         return countryId;
     }
+
     public void setCountryId(Long countryId) {
         this.countryId = countryId;
     }
@@ -59,6 +59,7 @@ public class Country {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -66,12 +67,11 @@ public class Country {
     public List<Book> getBooks() {
         return books;
     }
+
     public void setBooks(List<Book> books) {
         this.books = books;
     }
 
-    // Utility methods for synchronizing both sides of the relationship
-    //? TODO : Trust?
     public void addBook(Book book) {
         books.add(book);
         book.setCountry(this);
@@ -80,5 +80,13 @@ public class Country {
     public void removeBook(Book book) {
         books.remove(book);
         book.setCountry(null);
+    }
+
+    @Override
+    public String toString() {
+        return "Country(" +
+                "countryId=" + countryId +
+                ", name='" + name + '\'' +
+                ')';
     }
 }

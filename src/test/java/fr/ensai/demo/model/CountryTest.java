@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class CountryTest {
-    
+
     /**
      * DummyBook is a simple subclass of Book for testing purposes.
      * It implements the setCountry and getCountry methods so that we can verify

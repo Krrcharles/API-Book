@@ -22,7 +22,6 @@ class BookCollectionTest {
 
     @Test
     void testDefaultConstructor() {
-        // The default (protected) constructor is accessible in the same package.
         BookCollection bc = new BookCollection();
         assertNull(bc.getCollectionId(), "Default constructor should leave collectionId as null");
         assertNull(bc.getName(), "Default constructor should leave name as null");
@@ -61,14 +60,14 @@ class BookCollectionTest {
         bc.setName("Test Collection");
         bc.setDistanceJaro(0.55);
         bc.setDistanceJaccard(0.60);
-        
+
         List<Book> books = new ArrayList<>();
         Book book1 = createDummyBook(100L);
         Book book2 = createDummyBook(101L);
         books.add(book1);
         books.add(book2);
         bc.setBooks(books);
-        
+
         assertEquals(10L, bc.getCollectionId(), "setCollectionId/getCollectionId not working correctly");
         assertEquals("Test Collection", bc.getName(), "setName/getName not working correctly");
         assertEquals(0.55, bc.getDistanceJaro(), "setDistanceJaro/getDistanceJaro not working correctly");

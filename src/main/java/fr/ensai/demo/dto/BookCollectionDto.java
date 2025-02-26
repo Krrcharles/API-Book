@@ -8,24 +8,26 @@ public class BookCollectionDto {
     private String name;
     private Double distanceJaro;
     private Double distanceJaccard;
-    private List<BookDto> books;
+    private List<Long> bookIds;
 
     // ----------------------------------------------------------------
     // Constructors
     // ----------------------------------------------------------------
 
-    public BookCollectionDto() {}
+    public BookCollectionDto() {
+    }
 
-    public BookCollectionDto(Long collectionId, String name, Double distanceJaro, Double distanceJaccard, List<BookDto> books) {
+    public BookCollectionDto(Long collectionId, String name, Double distanceJaro, Double distanceJaccard,
+            List<Long> bookIds) {
         this.collectionId = collectionId;
         this.name = name;
         this.distanceJaro = distanceJaro;
         this.distanceJaccard = distanceJaccard;
-        this.books = books;
+        this.bookIds = bookIds;
     }
 
-    public BookCollectionDto(String name, Double distanceJaro, Double distanceJaccard, List<BookDto> books) {
-        this(null, name, distanceJaro, distanceJaccard, books);
+    public BookCollectionDto(String name, Double distanceJaro, Double distanceJaccard, List<Long> bookIds) {
+        this(null, name, distanceJaro, distanceJaccard, bookIds);
     }
 
     // ----------------------------------------------------------------
@@ -64,11 +66,22 @@ public class BookCollectionDto {
         this.distanceJaccard = distanceJaccard;
     }
 
-    public List<BookDto> getBooks() {
-        return books;
+    public List<Long> getBookIds() {
+        return bookIds;
     }
 
-    public void setBooks(List<BookDto> books) {
-        this.books = books;
+    public void setBookIds(List<Long> bookIds) {
+        this.bookIds = bookIds;
+    }
+
+    @Override
+    public String toString() {
+        return "BookCollectionDto(" +
+                "collectionId=" + collectionId +
+                ", name='" + name + '\'' +
+                ", distanceJaro=" + distanceJaro +
+                ", distanceJaccard=" + distanceJaccard +
+                ", bookIds=" + bookIds +
+                ')';
     }
 }

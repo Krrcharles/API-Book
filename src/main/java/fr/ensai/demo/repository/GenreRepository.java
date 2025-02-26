@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GenreRepository extends CrudRepository<Genre, Long> {
     Iterable<Genre> findByLabel(String label);
+
     Iterable<Genre> findByLabelIgnoreCase(String label);
 }

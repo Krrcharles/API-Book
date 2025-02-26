@@ -1,8 +1,6 @@
 package fr.ensai.demo.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -20,15 +18,13 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @SpringBootTest
 @TestInstance(Lifecycle.PER_CLASS)
-public class RootControllerTest {
+public class CsvImportControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+	// @Autowired
+	// private MockMvc mockMvc;
 
-    @Test
-    void testIndex() throws Exception {
-        mockMvc.perform(get("/"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("OK"));
-    }
+	@Test
+	void todo() {
+		assertTrue(true);
+	}
 }

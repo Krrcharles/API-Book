@@ -23,7 +23,6 @@ public class Genre {
      * One genre can be linked to many books.
      * "mappedBy = 'genre'" must match the field name in Book.java
      * where @ManyToOne is declared.
-     * TODO : Trust.
      */
     @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL, orphanRemoval = false)
     private List<Book> books = new ArrayList<>();
@@ -52,6 +51,7 @@ public class Genre {
     public Long getGenreId() {
         return genreId;
     }
+
     public void setGenreId(Long genreId) {
         this.genreId = genreId;
     }
@@ -59,6 +59,7 @@ public class Genre {
     public String getLabel() {
         return label;
     }
+
     public void setLabel(String label) {
         this.label = label;
     }
@@ -66,12 +67,11 @@ public class Genre {
     public List<Book> getBooks() {
         return books;
     }
+
     public void setBooks(List<Book> books) {
         this.books = books;
     }
 
-    // Utility methods for synchronizing both sides of the relationship
-    //? TODO : Trust?
     public void addBook(Book book) {
         books.add(book);
         book.setGenre(this);
@@ -80,5 +80,13 @@ public class Genre {
     public void removeBook(Book book) {
         books.remove(book);
         book.setGenre(null);
+    }
+
+    @Override
+    public String toString() {
+        return "Genre(" +
+                "genreId=" + genreId +
+                ", label='" + label + '\'' +
+                ')';
     }
 }

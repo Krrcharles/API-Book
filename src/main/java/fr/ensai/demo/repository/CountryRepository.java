@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CountryRepository extends CrudRepository<Country, Long> {
     public Iterable<Country> findByName(String name);
+
     public Iterable<Country> findByNameIgnoreCase(String name);
 }

@@ -29,11 +29,7 @@ public class BookCollection {
      * with matching "collection_id" and "book_id" columns.
      */
     @ManyToMany
-    @JoinTable(
-        name = "t_book_collection_book",
-        joinColumns = @JoinColumn(name = "collection_id"),
-        inverseJoinColumns = @JoinColumn(name = "book_id")
-    )
+    @JoinTable(name = "t_book_collection_book", joinColumns = @JoinColumn(name = "collection_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<Book> books = new ArrayList<>();
 
     // ----------------------------------------------------------------
@@ -107,23 +103,24 @@ public class BookCollection {
         return bookIds;
     }
 
-    // ----------------------------------------------------------------
-    // Utility methods for relationship management
-    // ----------------------------------------------------------------
-
-    /**
-     * Add a book to the collection and ensure the relationship is set.
-     */
     public void addBook(Book book) {
         if (!books.contains(book)) {
             books.add(book);
         }
     }
 
-    /**
-     * Remove a book from the collection.
-     */
     public void removeBook(Book book) {
         books.remove(book);
+    }
+
+    @Override
+    public String toString() {
+        return "BookCollection(" +
+                "collectionId=" + collectionId +
+                ", name='" + name + '\'' +
+                ", distanceJaro=" + distanceJaro +
+                ", distanceJaccard=" + distanceJaccard +
+                ", books=" + books +
+                ')';
     }
 }

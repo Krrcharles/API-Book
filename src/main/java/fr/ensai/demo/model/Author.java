@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import jakarta.validation.constraints.NotEmpty;
 
-
 @Entity
 @Table(name = "t_author")
 public class Author {
@@ -53,6 +52,7 @@ public class Author {
     public Long getAuthorId() {
         return authorId;
     }
+
     public void setAuthorId(Long authorId) {
         this.authorId = authorId;
     }
@@ -60,6 +60,7 @@ public class Author {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -67,26 +68,23 @@ public class Author {
     public List<Book> getBooks() {
         return books;
     }
+
     public void setBooks(List<Book> books) {
         this.books = books;
     }
 
-
-    //? TODO : Trust?
-    /**
-     * Utility method to add a book to this author's list and
-     * set the author on the book entity.
-     */
     public void addBook(Book book) {
         books.add(book);
         book.setAuthor(this);
     }
 
-    /**
-     * Utility method to remove a book from this author's list.
-     */
     public void removeBook(Book book) {
         books.remove(book);
         book.setAuthor(null);
+    }
+
+    @Override
+    public String toString() {
+        return "Author(authorId=" + authorId + ", name=" + name + ")";
     }
 }
