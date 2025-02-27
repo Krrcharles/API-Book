@@ -99,4 +99,14 @@ class GenreTest {
         assertTrue(genre.getBooks().isEmpty(), "Books list should be empty after removeBook");
         assertNull(book.getGenre(), "Book's genre should be null after removal");
     }
+
+    @Test
+    void testGenreToString() {
+        Genre genre = new Genre(2L, "Fiction");
+
+        assertEquals(
+                "Genre(genreId=2, label=\"Fiction\")",
+                genre.toString(),
+                "toString should return the expected string");
+    }
 }

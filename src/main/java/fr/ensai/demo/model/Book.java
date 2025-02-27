@@ -137,7 +137,7 @@ public class Book {
     public String toString() {
         return "Book(" +
                 "bookId=" + bookId +
-                ", title='" + title + '\'' +
+                ", title=\"" + title + "\"" +
                 ", publicationYear=" + publicationYear +
                 ", author=" + author +
                 ", genre=" + genre +

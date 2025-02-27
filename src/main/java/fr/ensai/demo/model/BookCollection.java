@@ -117,7 +117,7 @@ public class BookCollection {
     public String toString() {
         return "BookCollection(" +
                 "collectionId=" + collectionId +
-                ", name='" + name + '\'' +
+                ", name=\"" + name + "\"" +
                 ", distanceJaro=" + distanceJaro +
                 ", distanceJaccard=" + distanceJaccard +
                 ", books=" + books +

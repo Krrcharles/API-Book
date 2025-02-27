@@ -86,7 +86,7 @@ public class Genre {
     public String toString() {
         return "Genre(" +
                 "genreId=" + genreId +
-                ", label='" + label + '\'' +
-                ')';
+                ", label=\"" + label + "\"" +
+                ")";
     }
 }

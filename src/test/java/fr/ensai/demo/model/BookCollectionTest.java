@@ -12,11 +12,10 @@ class BookCollectionTest {
      * It uses simple instances of Author, Genre, and Country.
      */
     private Book createDummyBook(Long id) {
-        Author author = new Author("Dummy Author");
-        Genre genre = new Genre("Dummy Genre");
-        Country country = new Country("Dummy Country");
-        Book book = new Book(author, "Dummy Title", 2021, genre, country);
-        book.setBookId(id);
+        Author author = new Author(id, "Dummy Author");
+        Genre genre = new Genre(id, "Dummy Genre");
+        Country country = new Country(id, "Dummy Country");
+        Book book = new Book(id, author, "Dummy Title", 2021, genre, country);
         return book;
     }
 
@@ -113,5 +112,24 @@ class BookCollectionTest {
         assertEquals(1, bc.getBooks().size(), "Books list should have one book before removal");
         bc.removeBook(book);
         assertTrue(bc.getBooks().isEmpty(), "Books list should be empty after removeBook");
+    }
+
+    @Test
+    void testBookCollectionToString() {
+        List<Book> books = List.of(createDummyBook(10L));
+        BookCollection collection = new BookCollection(5L, "My Collection", 0.85, 0.78);
+        collection.setBooks(books);
+
+        String expectedAuthor = "Author(authorId=10, name=\"Dummy Author\")";
+        String expectedGenre = "Genre(genreId=10, label=\"Dummy Genre\")";
+        String expectedCountry = "Country(countryId=10, name=\"Dummy Country\")";
+        String expectedBook = "Book(bookId=10, title=\"Dummy Title\", publicationYear=2021, author=" + expectedAuthor
+                + ", genre=" + expectedGenre + ", country=" + expectedCountry + ")";
+
+        assertEquals(
+                "BookCollection(collectionId=5, name=\"My Collection\", distanceJaro=0.85, distanceJaccard=0.78, books=["
+                        + expectedBook + "])",
+                collection.toString(),
+                "toString should return the expected string");
     }
 }

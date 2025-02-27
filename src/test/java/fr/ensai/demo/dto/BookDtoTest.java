@@ -46,4 +46,14 @@ class BookDtoTest {
         assertEquals("Programming", dto.getGenreLabel(), "Genre label should be 'Programming'");
         assertEquals("USA", dto.getCountryName(), "Country name should be 'USA'");
     }
+
+    @Test
+    void testBookDtoToString() {
+        BookDto bookDto = new BookDto(10L, "Sample Book", 2020, "Test Author", "Fiction", "USA");
+
+        assertEquals(
+                "BookDto(bookId=10, title=\"Sample Book\", publicationYear=2020, authorName=\"Test Author\", genreLabel=\"Fiction\", countryName=\"USA\")",
+                bookDto.toString(),
+                "toString should return the expected string");
+    }
 }

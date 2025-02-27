@@ -104,14 +104,18 @@ public class BookCollectionController {
     @GetMapping("/compare/{collectionId1}/{collectionId2}/{metric}")
     public ResponseEntity<Double> compareCollections(@PathVariable Long collectionId1, @PathVariable Long collectionId2,
             @PathVariable String metric) {
-        if (metric == null || (!metric.equals("size") && (!metric.equals("jaro") && !metric.equals("jaccard")))) {
+        if (metric == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Comparison metric must be provided");
+        }
+        metric = metric.toLowerCase();
+        if (!(metric.equals("size") || metric.equals("jaro") || metric.equals("jaccard"))) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Comparison metric must be either 'size' or 'jaro' or 'jaccard'");
         }
         Double result = bookCollectionService.compareCollections(collectionId1, collectionId2, metric);
         if (result == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Comparison failed: either collections not found or metric '" + metric + "' is invalid");
+                    "Comparison failed: collections not found");
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

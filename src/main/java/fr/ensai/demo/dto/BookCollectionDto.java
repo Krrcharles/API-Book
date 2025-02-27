@@ -78,7 +78,7 @@ public class BookCollectionDto {
     public String toString() {
         return "BookCollectionDto(" +
                 "collectionId=" + collectionId +
-                ", name='" + name + '\'' +
+                ", name=\"" + name + "\"" +
                 ", distanceJaro=" + distanceJaro +
                 ", distanceJaccard=" + distanceJaccard +
                 ", bookIds=" + bookIds +

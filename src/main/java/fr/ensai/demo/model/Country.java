@@ -86,7 +86,7 @@ public class Country {
     public String toString() {
         return "Country(" +
                 "countryId=" + countryId +
-                ", name='" + name + '\'' +
-                ')';
+                ", name=\"" + name + "\"" +
+                ")";
     }
 }

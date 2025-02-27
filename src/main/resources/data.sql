@@ -88,8 +88,9 @@ INSERT INTO t_book (title, publication_year, author_id, genre_id, country_id) VA
 ----------------------------------------------------------------
 -- 5) INSERT INTO t_book_collection
 ----------------------------------------------------------------
-INSERT INTO t_book_collection (name, distance_jaro, distance_jaccard)
-VALUES ('Latest Books', NULL, NULL);
+INSERT INTO t_book_collection (name, distance_jaro, distance_jaccard) VALUES
+  ('Latest Books', 45, 90),
+  ('Fist Books', 45, 90);
 
 ----------------------------------------------------------------
 -- 6) INSERT INTO t_book_collection_book (link table for N-N relationship)
@@ -105,4 +106,14 @@ INSERT INTO t_book_collection_book (collection_id, book_id) VALUES
   (1, 22),
   (1, 23),
   (1, 24),
-  (1, 25);
+  (1, 25),
+  (2, 1),
+  (2, 2),
+  (2, 3),
+  (2, 4),
+  (2, 5),
+  (2, 6),
+  (2, 7),
+  (2, 8),
+  (2, 9),
+  (2, 10);

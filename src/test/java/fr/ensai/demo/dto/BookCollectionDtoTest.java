@@ -52,4 +52,15 @@ class BookCollectionDtoTest {
         assertEquals(0.60, dto.getDistanceJaccard(), "DistanceJaccard should be 0.60");
         assertEquals(bookIds, dto.getBookIds(), "Books list should match the provided list");
     }
+
+    @Test
+    void testBookCollectionDtoToString() {
+        List<Long> bookIds = List.of(10L, 20L, 30L);
+        BookCollectionDto collectionDto = new BookCollectionDto(5L, "My Collection", 0.85, 0.78, bookIds);
+
+        assertEquals(
+                "BookCollectionDto(collectionId=5, name=\"My Collection\", distanceJaro=0.85, distanceJaccard=0.78, bookIds=[10, 20, 30])",
+                collectionDto.toString(),
+                "toString should return the expected string");
+    }
 }

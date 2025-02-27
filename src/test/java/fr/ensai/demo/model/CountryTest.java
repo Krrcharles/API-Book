@@ -99,4 +99,14 @@ class CountryTest {
         assertTrue(country.getBooks().isEmpty(), "Books list should be empty after removeBook");
         assertNull(book.getCountry(), "Book's country should be null after removal");
     }
+
+    @Test
+    void testCountryToString() {
+        Country country = new Country(3L, "USA");
+
+        assertEquals(
+                "Country(countryId=3, name=\"USA\")",
+                country.toString(),
+                "toString should return the expected string");
+    }
 }

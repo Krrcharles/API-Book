@@ -99,4 +99,11 @@ class AuthorTest {
         assertTrue(author.getBooks().isEmpty(), "Books list should be empty after removeBook");
         assertNull(book.getAuthor(), "Book's author should be null after removal");
     }
+
+    @Test
+    void testToString() {
+        Author author = new Author(1L, "Test Author");
+        assertEquals("Author(authorId=1, name=\"Test Author\")", author.toString(),
+                "toString should return the expected string");
+    }
 }

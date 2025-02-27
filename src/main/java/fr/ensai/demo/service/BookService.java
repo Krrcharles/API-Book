@@ -1,7 +1,10 @@
 package fr.ensai.demo.service;
 
+import fr.ensai.demo.dto.BookCollectionDto;
 import fr.ensai.demo.dto.BookDto;
+import fr.ensai.demo.events.BookRemovedFromCollectionEvent;
 import fr.ensai.demo.model.Book;
+import fr.ensai.demo.model.BookCollection;
 import fr.ensai.demo.model.Author;
 import fr.ensai.demo.model.Genre;
 import fr.ensai.demo.model.Country;
@@ -9,6 +12,8 @@ import fr.ensai.demo.repository.BookRepository;
 import fr.ensai.demo.repository.AuthorRepository;
 import fr.ensai.demo.repository.GenreRepository;
 import fr.ensai.demo.repository.CountryRepository;
+import fr.ensai.demo.repository.BookCollectionRepository;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -28,6 +33,10 @@ public class BookService {
     private GenreRepository genreRepository;
     @Autowired
     private CountryRepository countryRepository;
+    @Autowired
+    private BookCollectionRepository bookCollectionRepository;
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
 
     public Iterable<Book> findBooksByTitle(String title) {
         return bookRepository.findByTitleIgnoreCase(title);
@@ -43,7 +52,7 @@ public class BookService {
         // Create a new Book (null id for new entity)
         Book book = new Book(null, author, bookDto.getTitle(), bookDto.getPublicationYear(), genre, country);
         Book savedBook = bookRepository.save(book);
-        return entityToDto(savedBook);
+        return convertToDto(savedBook);
     }
 
     /**
@@ -75,20 +84,32 @@ public class BookService {
         book.setCountry(country);
 
         Book updatedBook = bookRepository.save(book);
-        return entityToDto(updatedBook);
+        return convertToDto(updatedBook);
     }
 
-    /**
-     * Delete a Book by its id.
-     * Returns true if the book existed (and was deleted), false otherwise.
-     */
+    @Transactional
     public boolean deleteBook(Long bookId) {
-        Optional<Book> optionalBook = bookRepository.findById(bookId);
-        if (optionalBook.isPresent()) {
-            bookRepository.deleteById(bookId);
-            return true;
+        // 1. Retrieve the book to be deleted.
+        Optional<Book> bookOpt = bookRepository.findById(bookId);
+        if (bookOpt.isEmpty()) {
+            return false;
         }
-        return false;
+        Book bookToDelete = bookOpt.get();
+
+        // 2. Find all collections that contain this book (using Iterable).
+        Iterable<BookCollection> collections = bookCollectionRepository.findByBooks_BookId(bookId);
+
+        // 3. Publish a removal event for each affected collection.
+        for (BookCollection bc : collections) {
+            BookCollectionDto collectionDto = BookCollectionService.convertToDto(bc);
+            eventPublisher.publishEvent(
+                    new BookRemovedFromCollectionEvent(collectionDto, convertToDto(bookToDelete)));
+        }
+
+        // 4. Proceed to delete the book.
+        bookRepository.delete(bookToDelete);
+
+        return true;
     }
 
     /**
@@ -98,7 +119,7 @@ public class BookService {
         Iterable<Book> books = bookRepository.findAll();
         List<BookDto> dtos = new ArrayList<>();
         for (Book book : books) {
-            dtos.add(entityToDto(book));
+            dtos.add(convertToDto(book));
         }
         return dtos;
     }
@@ -112,18 +133,7 @@ public class BookService {
         if (optionalBook.isEmpty()) {
             throw new IllegalArgumentException("Book not found");
         }
-        return entityToDto(optionalBook.get());
-    }
-
-    // Helper method to convert a Book entity to a BookDto.
-    private BookDto entityToDto(Book book) {
-        return new BookDto(
-                book.getBookId(),
-                book.getTitle(),
-                book.getPublicationYear(),
-                (book.getAuthor() != null) ? book.getAuthor().getName() : null,
-                (book.getGenre() != null) ? book.getGenre().getLabel() : null,
-                (book.getCountry() != null) ? book.getCountry().getName() : null);
+        return convertToDto(optionalBook.get());
     }
 
     // Helper method to get an Author by name or create one if not found.
@@ -168,19 +178,30 @@ public class BookService {
         return countryRepository.save(newCountry);
     }
 
+    // Helper method to convert a Book entity to a BookDto.
+    static BookDto convertToDto(Book book) {
+        return new BookDto(
+                book.getBookId(),
+                book.getTitle(),
+                book.getPublicationYear(),
+                (book.getAuthor() != null) ? book.getAuthor().getName() : null,
+                (book.getGenre() != null) ? book.getGenre().getLabel() : null,
+                (book.getCountry() != null) ? book.getCountry().getName() : null);
+    }
+
     /**
      * Create or update a Book using a DTO, then return the saved entity as a DTO.
-    @Transactional
-    public BookDto saveBook(BookDto dto) {
+     @Transactional
+     public BookDto saveBook(BookDto dto) {
         // If no ID => new book, else load existing or create new if not found
         Book nullBook = new Book(null, null, 0, null, null);
         Book book = (dto.getBookId() == null)
-                ? nullBook
-                : bookRepository.findById(dto.getBookId()).orElse(nullBook);
-    
+        ? nullBook
+        : bookRepository.findById(dto.getBookId()).orElse(nullBook);
+        
         book.setTitle(dto.getTitle());
         book.setPublicationYear(dto.getPublicationYear());
-    
+        
         // 1) Find authors by name
         Author foundAuthor = null;
         if (dto.getAuthorName() != null) {

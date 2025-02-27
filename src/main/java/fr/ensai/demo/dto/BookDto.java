@@ -87,11 +87,11 @@ public class BookDto {
     public String toString() {
         return "BookDto(" +
                 "bookId=" + bookId +
-                ", title='" + title + '\'' +
+                ", title=\"" + title + "\"" +
                 ", publicationYear=" + publicationYear +
-                ", authorName='" + authorName + '\'' +
-                ", genreLabel='" + genreLabel + '\'' +
-                ", countryName='" + countryName + '\'' +
-                ')';
+                ", authorName=\"" + authorName + "\"" +
+                ", genreLabel=\"" + genreLabel + "\"" +
+                ", countryName=\"" + countryName + "\"" +
+                ")";
     }
 }

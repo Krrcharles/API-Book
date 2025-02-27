@@ -10,4 +10,6 @@ public interface BookCollectionRepository extends CrudRepository<BookCollection,
     public Iterable<BookCollection> findByName(String name);
 
     public Iterable<BookCollection> findByNameIgnoreCase(String name);
+
+    public Iterable<BookCollection> findByBooks_BookId(Long bookId);
 }

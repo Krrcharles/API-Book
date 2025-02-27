@@ -121,4 +121,17 @@ class BookTest {
         assertFalse(book.equals(null), "A book should not be equal to null");
         assertFalse(book.equals("Some String"), "A book should not be equal to an object of a different type");
     }
+
+    @Test
+    void testBookToString() {
+        Author author = new Author(1L, "Test Author");
+        Genre genre = new Genre(2L, "Fiction");
+        Country country = new Country(3L, "USA");
+        Book book = new Book(10L, author, "Sample Book", 2020, genre, country);
+
+        assertEquals(
+                "Book(bookId=10, title=\"Sample Book\", publicationYear=2020, author=Author(authorId=1, name=\"Test Author\"), genre=Genre(genreId=2, label=\"Fiction\"), country=Country(countryId=3, name=\"USA\"))",
+                book.toString(),
+                "toString should return the expected string");
+    }
 }
